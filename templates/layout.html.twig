@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"
+      data-theme="{{ app.request.cookies.get('theme', 'auto') }}">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{{ site_name }}{% endblock %}</title>
+    <meta name="color-scheme" content="light dark">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gravitas+One&family=Permanent+Marker&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link  rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <script src="{{ asset('js/theme-toggle.js') }}" defer></script>
+</head>
+
+<body>
+<div id="page">
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1><a href="{{ path('blog_index') }}">{{ site_name }}</a></h1>
+            </div>
+            <div>
+                <button id="theme-toggle"
+                        style="background: none; border: none; color: white; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;"
+                        title="Toggle theme"
+                        data-theme="system">
+                    <i class="fas fa-desktop"></i>
+                    <!-- <span>System</span> -->
+                </button>
+            </div>
+        </div>
+        {# header navigation (if you exposed header_pages() earlier) #}
+        {% if header_pages() is defined %}
+        <nav>
+            {% for p in header_pages() %}
+                <a href="{{ path('page_show', {slug: p.slug}) }}">{{ p.title }}</a>
+            {% endfor %}
+        </nav>
+        {% else %}
+        <nav>No Navigation Defined</nav>
+        {% endif %}
+    </header>
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    <aside>
+        {% block sidebar %}
+            {% import 'widgets/categories.twig' as wd %}
+            {{ wd.categories(all_categories()) }}
+            {% import 'widgets/tags.twig' as wt %}
+            {{ wt.tags(all_tags()) }}
+            {# …add other widgets below if you like… #}
+
+        {% endblock %}
+    </aside>
+    <footer>
+        <nav>
+            {% if footer_pages() is defined %}
+                {% for p in footer_pages() %}
+                    <a href="{{ path('page_show', {slug: p.slug}) }}">{{ p.title }}</a>
+                {% endfor %}
+            {% endif %}
+        </nav>
+        <small>© {{ "now"|date("Y") }}</small>
+    </footer>
+</div>
+
+
+</body>
+</html>

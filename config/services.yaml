@@ -18,3 +18,22 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+       
+    # Content Type Repositories
+    App\Blog\PostRepository:
+        arguments:
+            $postsDir: '%kernel.project_dir%/data/posts'
+
+    App\Page\PageRepository:
+        arguments:
+            $pagesDir: '%kernel.project_dir%/data/pages'
+    
+    # Twig Extensions
+    App\Twig\PageExtension:
+        arguments: ['@App\Page\PageRepository']
+        tags: ['twig.extension']
+        
+    App\Twig\BlogExtension:
+        arguments: ['@App\Blog\PostRepository']
+        tags: ['twig.extension']
+            

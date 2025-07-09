@@ -1,0 +1,14 @@
+{% macro categories(list) %}
+<section class="widget widget-categories">
+  <h2 class="widget-title">Categories</h2>
+  <ul>
+    {% for cat in list %}
+      <li>
+        <a href="{{ path('blog_category', {cat: cat}) }}">{{ cat|title }}</a>
+      </li>
+    {% else %}
+      <li><em>No categories yet.</em></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endmacro %}

@@ -1,0 +1,209 @@
+/* ---------- CSS VARIABLES ---------- */
+/* Reset and base styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --header-bg: #333333;
+    --header-text: #ffffff;
+    --logo-font-stack: "Permanent Marker", cursive;
+    --header-font-stack: "Gravitas One", serif;
+    --base-font-stack: "Poppins", sans-serif;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --header-bg: #1f1f1f;
+    --header-text: #ffffff;
+}
+
+[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --header-bg: #333333;
+    --header-text: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+header,
+footer {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+}
+
+p.tags {
+    font-size: .8REM; 
+}
+
+a {
+    text-decoration: none;
+    color: #0066cc;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header and Footer */
+header {
+    padding: 1rem;
+    grid-area: header;
+    font-family: var(--logo-font-stack);
+    border-radius: 10px;
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+    grid-area: footer;
+    font-family: var(--base-font-stack);
+    border-radius: 10px;
+}
+
+/* Ensure theme variables apply across main content and sidebar */
+main,
+aside {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+header nav a {
+    margin-right: 1rem;
+    color: white;
+}
+
+/* Grid layout container */
+body > #page {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "main sidebar"
+        "footer footer";
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 0rem;
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+    min-height: 100vh;
+    border-radius:6px;
+    font-family: var(--base-font-stack);
+}
+
+/* Assign grid areas */
+main {
+    grid-area: main;
+    padding: 0;
+}
+
+aside {
+    grid-area: sidebar;
+    padding: 1rem;
+    border-right: 0;
+	border-left: 2px;
+	border-style: solid;
+   /* 	border-image: linear-gradient(to bottom, #ccc, #555 66%, #181818) 1 100%; */
+	border-image: linear-gradient(to bottom, #181818, #eee, #181818) 1 100%;
+}
+
+footer {
+    grid-area: footer;
+}
+
+/* Responsive layout: single column */
+@media (max-width: 768px) {
+    body > #page {
+        grid-template-areas:
+            "header"
+            "main"
+            "sidebar"
+            "footer";
+        grid-template-columns: 1fr;
+    }
+
+    aside {
+        border-left: none;
+        border-top: 1px solid #ddd;
+    }
+}
+
+/* Auto-detect dark if no explicit choice was made */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg:   #1a1a1a;
+        --fg:   #eaeaea;
+        --link: #79b8ff;
+    }
+}
+
+/* Explicit overrides controlled by JS */
+html[data-theme="light"]  {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --link: #0066cc;
+}
+html[data-theme="dark"] {
+    --bg: #1a1a1a;
+    --fg: #eaeaea;
+    --link: #79b8ff;
+}
+
+/* ---------- GLOBAL LAYOUT ---------- */
+body {               /* keep previous colours & fonts */
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+}
+
+/* Centered wrapper: main + sidebar */
+.site-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr 350px; /* main | sidebar  */
+    gap: 2rem;
+    align-items: start;               /* sidebar starts at top */
+}
+
+main  { width: 100%; }                /* no extra max-width */
+aside { width: 350px; }
+
+/* Optional: stack on small screens */
+@media (max-width: 1000px) {
+    .site-container { grid-template-columns: 1fr; }
+    aside            { width: 100%; order: -1; } /* sidebar first */
+}
+
+/* ---------- GLOBAL STYLES ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body   { margin: 0; background: var(--bg); color: var(--fg);
+         font-family: system-ui, sans-serif; line-height: 1.6; }
+
+a      { color: var(--link); text-underline-offset: .1em; }
+
+header, footer { padding: 1rem; }
+
+nav a  { margin-right: .75rem; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+main   { padding: 1rem; max-width: 60rem; margin: 0 auto; }
+
+button#theme-toggle { background: none; border: none; cursor: pointer;
+                      font-size: 1.1rem; }
+
+.icon { pointer-events: none; vertical-align: middle; }

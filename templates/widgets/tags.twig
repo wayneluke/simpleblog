@@ -1,0 +1,14 @@
+{% macro tags(list) %}
+<section class="widget widget-tags">
+  <h2 class="widget-title">Tags</h2>
+  <ul>
+    {% for tag in list %}
+      <li>
+        <a href="{{ path('blog_tag', {tag: tag}) }}">{{ tag|title }}</a>
+      </li>
+    {% else %}
+      <li><em>No Tags yet.</em></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endmacro %}
